@@ -6,6 +6,8 @@ import 'package:flutter/widgets.dart';
 typedef JDDropdownMenuClick = void Function(int index);
 typedef JDDropdownMenuDismiss = void Function();
 
+//用于多级下拉菜单
+
 enum JDDropdownMenuWidgetStyle {
   style1, //自适应
   style2, //等分
