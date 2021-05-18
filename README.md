@@ -72,8 +72,18 @@ JDDropdownMenuWidget(
 
 
 
+demo地址：https://github.com/JDongKhan/jd_dropdown_menu_demo.git
+
 
 
 
 
 ![demo](./demo.gif)
+![demo](https://github.com/JDongKhan/drop_down_menu/blob/main/demo.gif)
+
+![demo](https://github.com/JDongKhan/drop_down_menu/blob/3ad170afc1ab4b82341a51e4fa02fdd8492c627a/demo.gif)
+
+
+
+
+
