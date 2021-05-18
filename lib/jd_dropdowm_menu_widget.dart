@@ -19,8 +19,8 @@ class JDDropdownMenuItem {
   final double maxHeight; //内容区域高度
 
   JDDropdownMenuItem({
-    this.title,
-    this.menu,
+    required this.title,
+    required this.menu,
     this.maxHeight = 100,
   });
 }
@@ -44,17 +44,17 @@ class JDDropdownMenuController extends ChangeNotifier {
 
 class JDDropdownMenuWidget extends StatefulWidget {
   final List<JDDropdownMenuItem> items;
-  final JDDropdownMenuClick click;
-  final JDDropdownMenuDismiss dismiss;
-  final JDDropdownMenuWidgetStyle itemStyle;
-  final JDDropdownMenuController controller;
+  final JDDropdownMenuClick? click;
+  final JDDropdownMenuDismiss? dismiss;
+  final JDDropdownMenuWidgetStyle? itemStyle;
+  final JDDropdownMenuController? controller;
   final double height;
   JDDropdownMenuWidget({
-    this.items,
+    required this.items,
     this.height = 40,
     this.click,
     this.dismiss,
-    this.itemStyle,
+    this.itemStyle = JDDropdownMenuWidgetStyle.style1,
     this.controller,
   });
 
@@ -64,9 +64,9 @@ class JDDropdownMenuWidget extends StatefulWidget {
 
 class _JDDropdownMenuWidgetState extends State<JDDropdownMenuWidget>
     with SingleTickerProviderStateMixin {
-  OverlayEntry _entry;
-  Animation _animation;
-  AnimationController _animationController;
+  OverlayEntry? _entry;
+  late Animation _animation;
+  late AnimationController _animationController;
 
   @override
   void initState() {
@@ -78,23 +78,21 @@ class _JDDropdownMenuWidgetState extends State<JDDropdownMenuWidget>
     _animation = Tween(begin: 0.0, end: 1.0).animate(_animationController);
     _animationController.addListener(() {
       if (_animationController.status == AnimationStatus.dismissed) {
-        _entry.remove();
+        _entry!.remove();
         _entry = null;
         if (widget.dismiss != null) {
-          widget.dismiss();
+          widget.dismiss!();
         }
       }
     });
-    if (widget.controller != null) {
-      widget.controller.addListener(() {
-        if (widget.controller.isShow) {
-          JDDropdownMenuItem item = widget.items[widget.controller.menuIndex];
-          showMenu(context, item);
-        } else {
-          dismiss();
-        }
-      });
-    }
+    widget.controller?.addListener(() {
+      if (widget.controller!.isShow) {
+        JDDropdownMenuItem item = widget.items[widget.controller!.menuIndex];
+        showMenu(context, item);
+      } else {
+        dismiss();
+      }
+    });
     super.initState();
   }
 
@@ -103,7 +101,7 @@ class _JDDropdownMenuWidgetState extends State<JDDropdownMenuWidget>
     return SizedBox(
       height: widget.height,
       child: Row(
-        children: widget.items
+        children: widget.items!
             .map(
               (e) => menuItemWidget(e),
             )
@@ -131,12 +129,12 @@ class _JDDropdownMenuWidgetState extends State<JDDropdownMenuWidget>
 
   void showMenu(BuildContext context, JDDropdownMenuItem item) {
     if (widget.click != null) {
-      widget.click(widget.items.indexOf(item));
+      widget.click!(widget.items!.indexOf(item));
     }
-    RenderBox renderBox = context.findRenderObject();
+    RenderBox renderBox = context.findRenderObject() as RenderBox;
     Rect position = renderBox.localToGlobal(Offset.zero) & renderBox.size;
     if (_entry != null) {
-      _entry.remove();
+      _entry!.remove();
       _entry = null;
     }
 
@@ -148,7 +146,7 @@ class _JDDropdownMenuWidgetState extends State<JDDropdownMenuWidget>
           child: Column(
             children: [
               SizeTransition(
-                sizeFactor: _animation,
+                sizeFactor: _animation as Animation<double>,
                 child: Container(
                   child: item.menu,
                   height: item.maxHeight,
@@ -173,7 +171,7 @@ class _JDDropdownMenuWidgetState extends State<JDDropdownMenuWidget>
       ),
     );
 
-    Overlay.of(context).insert(_entry);
+    Overlay.of(context)!.insert(_entry!);
     _animationController.forward();
   }
 

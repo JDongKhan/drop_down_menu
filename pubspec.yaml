@@ -1,11 +1,11 @@
 name: jd_dropdowm_menu_widget
 description: A simple drop_down_menu  package.
-version: 0.0.2 
+version: 0.0.3
 #author: 419591321@qq.com
 homepage: https://github.com/JDongKhan
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
   flutter: ">=1.17.0"
 
 dependencies:

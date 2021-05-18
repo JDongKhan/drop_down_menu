@@ -8,20 +8,20 @@ typedef ClickCallBack = void Function(int selectIndex, String selectText);
 //支持自定义 pop 菜单
 
 void showPop({
-  @required BuildContext context,
-  @required List<String> items,
-  double top,
-  double left,
-  double right,
+  required BuildContext context,
+  required List<String> items,
+  double? top,
+  double? left,
+  double? right,
   double width = 100,
   double cellHeight = 40,
   Color backgroundColor = Colors.white,
   Color textColor = Colors.black,
   Color dividerColor = const Color(0xFFE6E6E6),
-  Color barrierColor,
+  required Color barrierColor,
   bool hiddenArrow = false,
   bool barrierDismissible = true,
-  ClickCallBack clickCallback,
+  ClickCallBack? clickCallback,
 }) {
   Widget _buildMenuLineCell(dataArr) {
     return MediaQuery.removePadding(
@@ -122,19 +122,19 @@ void showPop({
 // }
 
 void showPopView({
-  @required BuildContext context,
-  Widget widget,
-  double top,
-  double left,
-  double right,
+  required BuildContext context,
+  Widget? widget,
+  double? top,
+  double? left,
+  double? right,
   double width = 100,
-  double height,
+  double? height,
   Color backgroundColor = Colors.white,
-  Color barrierColor,
+  required Color barrierColor,
   bool hiddenArrow = false,
   bool barrierDismissible = true,
 }) {
-  RenderBox renderBox = context.findRenderObject();
+  RenderBox renderBox = context.findRenderObject() as RenderBox;
   Rect position = renderBox.localToGlobal(Offset.zero) & renderBox.size;
   if (top == null) {
     top = position.bottom;
@@ -250,8 +250,8 @@ void showPopView({
 
 class BasePopMenus extends Dialog {
   BasePopMenus({
-    Key key,
-    this.child,
+    Key? key,
+    required this.child,
   }) : super(key: key);
 
   final Widget child;
@@ -264,7 +264,7 @@ class BasePopMenus extends Dialog {
         fit: StackFit.expand,
         children: <Widget>[
           GestureDetector(onTap: () => Navigator.pop(context)),
-          child
+          child,
         ],
       ),
     );
@@ -272,10 +272,10 @@ class BasePopMenus extends Dialog {
 }
 
 class TriangleUpPainter extends CustomPainter {
-  Color color; //填充颜色
-  Paint _paint; //画笔
-  Path _path; //绘制路径
-  double angle; //角度
+  Color? color; //填充颜色
+  late Paint _paint; //画笔
+  late Path _path; //绘制路径
+  double? angle; //角度
 
   TriangleUpPainter(Color color) {
     _paint = Paint()
@@ -308,7 +308,7 @@ class TriangleUpWidget extends StatefulWidget {
   Color color;
 
   TriangleUpWidget({
-    Key key,
+    Key? key,
     this.height = 14,
     this.width = 16,
     this.color = Colors.white,
