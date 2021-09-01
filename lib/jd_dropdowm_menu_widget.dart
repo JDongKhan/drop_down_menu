@@ -101,7 +101,7 @@ class _JDDropdownMenuWidgetState extends State<JDDropdownMenuWidget>
     return SizedBox(
       height: widget.height,
       child: Row(
-        children: widget.items!
+        children: widget.items
             .map(
               (e) => menuItemWidget(e),
             )
@@ -128,8 +128,9 @@ class _JDDropdownMenuWidgetState extends State<JDDropdownMenuWidget>
   }
 
   void showMenu(BuildContext context, JDDropdownMenuItem item) {
+    widget.controller?.isShow = true;
     if (widget.click != null) {
-      widget.click!(widget.items!.indexOf(item));
+      widget.click!(widget.items.indexOf(item));
     }
     RenderBox renderBox = context.findRenderObject() as RenderBox;
     Rect position = renderBox.localToGlobal(Offset.zero) & renderBox.size;
@@ -176,6 +177,7 @@ class _JDDropdownMenuWidgetState extends State<JDDropdownMenuWidget>
   }
 
   void dismiss() {
+    widget.controller?.isShow = false;
     if (_entry != null) {
       _animationController.reverse();
     }

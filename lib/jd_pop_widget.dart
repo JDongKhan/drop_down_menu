@@ -3,20 +3,19 @@ import 'package:flutter/material.dart';
 /// @author jd
 ///
 
-typedef ClickCallBack = void Function(int selectIndex, String selectText);
+typedef ClickCallBack = void Function(int selectIndex);
 
 //支持自定义 pop 菜单
 
 void showPop({
   required BuildContext context,
-  required List<String> items,
+  required List<Widget> items,
   double? top,
   double? left,
   double? right,
   double width = 100,
   double cellHeight = 40,
   Color backgroundColor = Colors.white,
-  Color textColor = Colors.black,
   Color dividerColor = const Color(0xFFE6E6E6),
   required Color barrierColor,
   bool hiddenArrow = false,
@@ -35,7 +34,7 @@ void showPop({
               onTap: () {
                 Navigator.pop(context);
                 if (clickCallback != null) {
-                  clickCallback(index, items[index]);
+                  clickCallback(index);
                 }
               },
               child: Container(
@@ -45,8 +44,7 @@ void showPop({
                 ),
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: Text(dataArr[index],
-                      style: TextStyle(fontSize: 16, color: textColor)),
+                  child: dataArr[index],
                 ),
               ));
         },
@@ -158,7 +156,7 @@ void showPopView({
                 if (!hiddenArrow)
                   Container(
                     padding: EdgeInsets.only(right: 10),
-                    child: TriangleUpWidget(height: 10, width: 14),
+                    child: TriangleUpWidget(height: 10, width: 14,color:backgroundColor),
                   ),
                 ClipRRect(
                     borderRadius: BorderRadius.circular(5),
